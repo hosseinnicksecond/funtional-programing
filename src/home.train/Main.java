@@ -2,6 +2,7 @@ package home.train;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
 
@@ -21,20 +22,26 @@ public class Main {
         employees.add(javad);
         employees.add(gazal);
 
-        employees.forEach(employee -> System.out.println(employee.getName()));
 
-        employees.forEach(employee -> {
-            if(employee.getAge()>30){
-                System.out.println(employee.getName());
-                System.out.println(employee.getAge());
+        printEmployeeNameByeAge(employees,"Employee over 30",employee -> employee.getAge()>30);
+
+        printEmployeeNameByeAge(employees, "Employee under 25", new Predicate<Employee>() {
+            @Override
+            public boolean test(Employee employee) {
+                return employee.getAge()<26;
             }
         });
+    }
 
-        employees.forEach(employee -> {
-            if(employee.getAge()<30){
-                System.out.println(employee.getName());
-                System.out.println(employee.getAge());
+    private static void printEmployeeNameByeAge(List<Employee> employees, String ageText,
+                                                Predicate<Employee> ageConditional){
+
+        System.out.println(ageText);
+        System.out.println("=====================");
+        for(Employee  e:employees){
+            if(ageConditional.test(e)){
+                System.out.println(e.getName());
             }
-        });
+        }
     }
 }
