@@ -22,5 +22,12 @@ public class Main {
         employees.add(gazal);
 
         employees.forEach(employee -> System.out.println(employee.getName()));
+
+        employees.forEach(employee -> {
+            if(employee.getAge()>30){
+                System.out.println(employee.getName());
+                System.out.println(employee.getAge());
+            }
+        });
     }
 }
