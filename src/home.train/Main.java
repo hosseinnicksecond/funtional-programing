@@ -3,6 +3,7 @@ package home.train;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -24,12 +25,31 @@ public class Main {
         employees.add(javad);
         employees.add(gazal);
 
+        Function<Employee,String> getLastName=(Employee e)->{
+            return e.getName().substring(e.getName().indexOf(" ")+1);
+        };
+
+        Function<Employee, String> getFirstName=(Employee e)->{
+            return e.getName().substring(0,e.getName().indexOf(" "));
+        };
+
         Random r= new Random();
-        Supplier<Integer> randomSupplier=()->r.nextInt(100);
-        for(int i=0;i<10;i++){
-            System.out.println(randomSupplier.get());
+        for(Employee e:employees){
+            if(r.nextBoolean()){
+                getName(getLastName,e);
+            }else getName(getFirstName,e);
         }
 
+        Function<Employee ,String> toUpperCase=employee -> employee.getName().toUpperCase();
+        Function<String , String> FirstName=name->name.substring(0,name.indexOf(" "));
+        Function Chain=toUpperCase.andThen(FirstName);
+        System.out.println(Chain.apply(employees.get(2)));
+
+
+    }
+
+    private static void getName(Function<Employee,String > getPart,Employee employee){
+        System.out.println(getPart.apply(employee));
     }
 
 }
