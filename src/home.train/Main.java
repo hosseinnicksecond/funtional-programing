@@ -2,6 +2,8 @@ package home.train;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
 public class Main {
@@ -31,6 +33,18 @@ public class Main {
                 return employee.getAge()<26;
             }
         });
+        IntPredicate greaterThan15=i->i>15;
+        IntPredicate lessThan100=i->i<100;
+//        Predicate<Integer> even=i->(i%2)==0; cant chain that with IntPredicate
+        IntPredicate even=i->(i%2)==0;
+
+        System.out.println("***? "+greaterThan15.and(lessThan100).test(50));
+        System.out.println("***? "+greaterThan15.and(lessThan100).and(even).test(50));
+
+        Boolean b=lessThan100.or(even).test(51);
+        System.out.println(b);
+
+        System.out.println("Test negate ===> "+lessThan100.negate().test(200));
     }
 
     private static void printEmployeeNameByeAge(List<Employee> employees, String ageText,
