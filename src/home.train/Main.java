@@ -3,6 +3,8 @@ package home.train;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -25,31 +27,30 @@ public class Main {
         employees.add(javad);
         employees.add(gazal);
 
-        Function<Employee,String> getLastName=(Employee e)->{
-            return e.getName().substring(e.getName().indexOf(" ")+1);
+
+        Function<Employee ,String> upperCase=(Employee e)->{
+            return e.getName().toUpperCase();
         };
 
-        Function<Employee, String> getFirstName=(Employee e)->{
-            return e.getName().substring(0,e.getName().indexOf(" "));
+        Function<String,String> getFirstPart=(String name)->{
+            return name.substring(0,name.indexOf(" "));
         };
 
-        Random r= new Random();
-        for(Employee e:employees){
-            if(r.nextBoolean()){
-                getName(getLastName,e);
-            }else getName(getFirstName,e);
-        }
+        upperCase.andThen(getFirstPart).apply(employees.get(1));
 
-        Function<Employee ,String> toUpperCase=employee -> employee.getName().toUpperCase();
-        Function<String , String> FirstName=name->name.substring(0,name.indexOf(" "));
-        Function Chain=toUpperCase.andThen(FirstName);
-        System.out.println(Chain.apply(employees.get(2)));
+        BiFunction<String ,Employee,String> concatAge=(String name,Employee employee)->{
+            return name.concat(" "+employee.getAge());
+        };
+        concatAge.andThen(getFirstPart).apply(employees.get(0).getName(),employees.get(0));
 
 
-    }
+        Consumer<String> c1=s -> s.toUpperCase();
+        Consumer<String> c2= System.out::println;
 
-    private static void getName(Function<Employee,String > getPart,Employee employee){
-        System.out.println(getPart.apply(employee));
+        c1.andThen(c2).accept("jojo");
+
+
+
     }
 
 }
