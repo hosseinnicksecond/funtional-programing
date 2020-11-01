@@ -75,21 +75,26 @@ public class Main {
 //            firstName.forEach(System.out::println);
 //
 //        }).start();
-
-        List<String> sortedGNumber=someBingo
-                .stream()
-                .map(String::toUpperCase)
-                .filter(s->s.startsWith("G"))
-                .sorted()
-                .collect(ArrayList::new, ArrayList::add,ArrayList::addAll);
-
-        sortedGNumber.forEach(System.out::println);
-
-        Map<Integer, List<Employee>> mappedByAge=company.stream()
-                .flatMap(department -> department.getEmployeeList().stream())
-                .collect(Collectors.groupingBy(e->e.getAge()));
+//
+//        List<String> sortedGNumber=someBingo
+//                .stream()
+//                .map(String::toUpperCase)
+//                .filter(s->s.startsWith("G"))
+//                .sorted()
+//                .collect(ArrayList::new, ArrayList::add,ArrayList::addAll);
+//
+//        sortedGNumber.forEach(System.out::println);
+//
+//        Map<Integer, List<Employee>> mappedByAge=company.stream()
+//                .flatMap(department -> department.getEmployeeList().stream())
+//                .collect(Collectors.groupingBy(e->e.getAge()));
 
 //        mappedByAge.values().forEach(System.out::println);
+
+        company.stream()
+                .flatMap(department -> department.getEmployeeList().stream())
+                .reduce((s1,s2)->s1.getAge()<s2.getAge() ? s1 :s2)
+                .ifPresent(System.out::println);
 
 
 
