@@ -1,26 +1,28 @@
 package home.train;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        Employee hossein = new Employee("hossein fozol", 36);
-        Employee hessam = new Employee("hessam khob", 30);
-        Employee farhad = new Employee("farhad kachal", 21);
-        Employee nooosh = new Employee("noosh topol", 24);
-        Employee javad = new Employee("javad aziz", 32);
-        Employee gazal = new Employee("gazal abji", 30);
+        List<String> someBingo= Arrays.asList(
+                "N40","N36","B12","B6","G53","G49","g69",
+                "G60","G50","I26","I17","I29","O71"
+        );
 
-        List<Employee> employees = new ArrayList<>();
-        employees.add(hessam);
-        employees.add(hossein);
-        employees.add(nooosh);
-        employees.add(farhad);
-        employees.add(javad);
-        employees.add(gazal);
+        List<String> gNumber=new ArrayList<>();
 
-        employees.forEach(employee -> System.out.println(employee.getName()));
+        {//without Stream
+            someBingo.forEach(n -> {
+                if (n.toUpperCase().startsWith("G")) {
+                    gNumber.add(n);
+                }
+            });
+
+            gNumber.sort((String s1, String s2) -> s1.compareTo(s2));
+            gNumber.forEach(s -> System.out.println(s));
+        }
     }
 }
