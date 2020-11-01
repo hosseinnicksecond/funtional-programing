@@ -14,15 +14,22 @@ public class Main {
 
         List<String> gNumber=new ArrayList<>();
 
-        {//without Stream
-            someBingo.forEach(n -> {
-                if (n.toUpperCase().startsWith("G")) {
-                    gNumber.add(n);
-                }
-            });
+//        {//without Stream
+//            someBingo.forEach(n -> {
+//                if (n.toUpperCase().startsWith("G")) {
+//                    gNumber.add(n);
+//                }
+//            });
+//
+//            gNumber.sort((String s1, String s2) -> s1.compareTo(s2));
+//            gNumber.forEach(s -> System.out.println(s));
+//        }
 
-            gNumber.sort((String s1, String s2) -> s1.compareTo(s2));
-            gNumber.forEach(s -> System.out.println(s));
-        }
+        someBingo
+                .stream()
+                .map(String::toUpperCase)
+                .filter(s->s.startsWith("G"))
+                .sorted()
+                .forEach(System.out::println);
     }
 }
